@@ -1,0 +1,4 @@
+function showTab(tabId) {
+  alert('This is a placeholder for tab: ' + tabId);
+}
+add script. js
