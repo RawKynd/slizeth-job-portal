@@ -1,48 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SLiZETh Job Portal</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  /* Basic styling for professional look */
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f5f5; color:#333; }
+  header { background:#0d47a1; color:white; padding:15px; text-align:center; }
+  nav a { color:white; margin:0 10px; text-decoration:none; font-weight:bold; }
+  nav a:hover { text-decoration:underline; }
+  .tab { display:none; padding:20px; }
+  .active { display:block; }
+  footer { background:#0d47a1; color:white; text-align:center; padding:10px; margin-top:20px; }
+  ul { padding-left:20px; }
+  button { padding:10px 15px; margin:10px 0; cursor:pointer; }
+  input, textarea { padding:8px; margin:5px 0; width:100%; max-width:400px; }
+  iframe { width:100%; height:300px; border:none; margin-top:10px; }
+</style>
+</head>
+<body>
 
-  <section id="training">
-    <h2>Training & Skills</h2>
-    <p>Gain access to in-service training, apprenticeships, and upskilling opportunities in multiple sectors.</p>
+<header>
+  <h1>SLiZETh Job Portal</h1>
+  <nav>
+    <a href="#" onclick="showTab('home')">Home</a>
+    <a href="#" onclick="showTab('jobs')">Jobs</a>
+    <a href="#" onclick="showTab('services')">Services</a>
+    <a href="#" onclick="showTab('events')">Events</a>
+    <a href="#" onclick="showTab('members')">Zathe Members</a>
+    <a href="#" onclick="showTab('about')">About</a>
+  </nav>
+</header>
+
+<main>
+  <!-- Home -->
+  <section id="home" class="tab active">
+    <h2>Welcome to SLiZETh Job Portal</h2>
+    <p>Your trusted, legal, and reliable job portal in Durban and KZN. Find jobs, internships, leanerships, apprenticeships, training opportunities, and small business collaborations all in one place.</p>
   </section>
 
-  <section id="business">
-    <h2>Small Business & Startups</h2>
-    <p>Explore reliable business opportunities and startup support initiatives in KwaZulu-Natal.</p>
+  <!-- Jobs -->
+  <section id="jobs" class="tab">
+    <h2>Latest Jobs & Opportunities</h2>
+    <ul id="job-list"></ul>
+    <h3>Job Locations Map</h3>
+    <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=31.0%2C-30.0%2C32.0%2C-29.5&layer=mapnik" title="Job Map"></iframe>
   </section>
 
-  <section id="about">
-      <h2>About Slizeth Job Portal</h2>
-    <p>Slizeth is dedicated to empowering the people of KZN with reliable job connections, training programs, and opportunities to grow businesses. Partnered with <strong>Zathe Events</strong> to bring communities together.</p>
+  <!-- Services -->
+  <section id="services" class="tab">
+    <h2>Free Helpful Services</h2>
+    <ul>
+      <li>Job interview simulations</li>
+      <li>CV/Resume review & feedback</li>
+      <li>Sector-specific career webinars</li>
+      <li>Small business mentorship for startups</li>
+      <li>Legal & labour rights guidance</li>
+    </ul>
+    <h3>Weather Info (Free)</h3>
+    <iframe src="https://forecast7.com/en/29d8587d31d0218/durban/" title="Durban Weather"></iframe>
   </section>
-  
 
-  <footer>
-    <p>&copy; 2025 Slizeth Job Portal | Powered by SliZeth Pty(Ltd)</p>
-  </footer>
+  <!-- Events -->
+  <section id="events" class="tab">
+    <h2>Upcoming Durban / KZN Events</h2>
+    <ul>
+      <li>Zathe Music Festival - 25 Sep 2025</li>
+      <li>KZN Startup Expo - 10 Oct 2025</li>
+      <li>Community Health Workshop - 15 Oct 2025</li>
+    </ul>
+  </section>
 
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script>
-    function showTab(tabId) {
-      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
-      document.getElementById(tabId).classList.add("active");
-    }
-    function updateDateTime() {
-      const now = new Date();
-      document.getElementById("date").innerText = now.toLocaleDateString();
-      document.getElementById("time").innerText = now.toLocaleTimeString();
-    }
-    setInterval(updateDateTime, 1000);
-    updateDateTime();
+  <!-- Zathe Members -->
+  <section id="members" class="tab">
+    <h2>Register as Zathe Member</h2>
+    <form id="members-form">
+      <input type="text" name="name" placeholder="Full Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="text" name="talent" placeholder="Your Talent / Role" required>
+      <button type="submit">Submit Membership</button>
+    </form>
+    <p>After submission, wait for approval to participate in upcoming shows.</p>
+  </section>
 
-    // OpenStreetMap with Leaflet
-    var map = L.map('mapid').setView([-29.8587, 31.0218], 12); // Durban coords
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+  <!-- About -->
+  <section id="about" class="tab">
+    <h2>About SLiZETh Job Portal</h2>
+    <p>SLiZETh Pty (Ltd) | Durban, South Africa</p>
+    <p>Email: rawvisual02@gmail.com | Tel: 0670578007</p>
+    <p>Partners: Zathe Events</p>
+    <p>Follow us:</p>
+    <ul>
+      <li><a href="https://www.facebook.com">Facebook</a></li>
+      <li><a href="https://www.instagram.com">Instagram</a></li>
+      <li><a href="https://www.twitter.com">Twitter</a></li>
+    </ul>
+  </section>
+</main>
 
-    // Example marker
-    L.marker([-29.8587, 31.0218]).addTo(map)
-      .bindPopup("Durban Job Example").openPopup();
-  </script>
+<footer>
+  <p>&copy; 2025 SLiZETh Pty Ltd | Created by RAW1 @ RAW Studios</p>
+</footer>
+
+<script>
+  // Tab switching
+  function showTab(tabId){
+    document.querySelectorAll('.tab').forEach(tab => tab.style.display='none');
+    document.getElementById(tabId).style.display='block';
+  }
+
+  // Sample Jobs
+  const jobs = [
+    {title:"Retail Cashier", company:"ShopRight Durban"},
+    {title:"Apprentice Electrician", company:"Durban Electrics"},
+    {title:"Intern - Graphic Design", company:"Creative KZN"},
+    {title:"Community Health Worker", company:"KZN Health Dept"},
+    {title:"Junior Accountant", company:"Finance Solutions KZN"}
+  ];
+
+  const jobList = document.getElementById('job-list');
+  jobs.forEach(job => {
+    const li = document.createElement('li');
+    li.innerHTML = `<strong>${job.title}</strong> at ${job.company}`;
+    jobList.appendChild(li);
+  });
+
+  // Members form submission (just alert for now)
+  document.getElementById('members-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    alert("Membership submitted! Wait for approval.");
+    this.reset();
+  });
+</script>
+
 </body>
-</html>
+            </html>
