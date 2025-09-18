@@ -1,199 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Slizeth Job Portal</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
-<style>
-  body { margin:0; font-family: Arial, sans-serif; background:#f4f7fb; color:#333; }
-  header { background: linear-gradient(135deg,#004aad,#00c2ff); color:white; padding:20px; text-align:center; }
-  header img { max-height:80px; display:block; margin:0 auto 10px; }
-  nav { display:flex; flex-wrap:wrap; justify-content:center; background:#002f6c; }
-  nav button { background:none; border:none; color:white; padding:12px 16px; cursor:pointer; font-size:15px; }
-  nav button:hover { background:#004aad; }
-  section { display:none; padding:20px; max-width:900px; margin:20px auto; background:white; box-shadow:0 2px 8px rgba(0,0,0,0.1); border-radius:8px; }
-  section.active { display:block; }
-  #mapid { height:400px; width:100%; border-radius:8px; margin-bottom:20px; }
-  footer { margin-top:30px; text-align:center; padding:15px; background:#002f6c; color:white; }
-  a { color:#004aad; text-decoration:none; }
-  a:hover { text-decoration:underline; }
-  form input, form textarea, form select, form button { display:block; width:100%; margin:10px 0; padding:10px; font-size:14px; }
-</style>
-</head>
-<body>
 
-<header>
-  <img src="slizeth-logo.png" alt="Slizeth Logo">
-  <h1>Slizeth Job Portal</h1>
-  <p>Your trusted partner for job opportunities, training, and events in KZN</p>
-</header>
+  <section id="training">
+    <h2>Training & Skills</h2>
+    <p>Gain access to in-service training, apprenticeships, and upskilling opportunities in multiple sectors.</p>
+  </section>
 
-<nav>
-  <button onclick="showTab('home')">Home</button>
-  <button onclick="showTab('map')">Job Map</button>
-  <button onclick="showTab('opportunities')">Opportunities</button>
-  <button onclick="showTab('training')">Training</button>
-  <button onclick="showTab('business')">Business</button>
-  <button onclick="showTab('members')">Zathe Members</button>
-  <button onclick="showTab('events')">Upcoming Events</button>
-  <button onclick="showTab('weather')">Weather</button>
-  <button onclick="showTab('services')">Services</button>
-  <button onclick="showTab('jobmakers')">Job Makers</button>
-  <button onclick="showTab('about')">About</button>
-</nav>
+  <section id="business">
+    <h2>Small Business & Startups</h2>
+    <p>Explore reliable business opportunities and startup support initiatives in KwaZulu-Natal.</p>
+  </section>
 
-<section id="home" class="active">
-  <h2>Welcome to Slizeth Job Portal</h2>
-  <p>We provide trustworthy connections for job seekers, training opportunities, small businesses, and creative artists in KwaZulu-Natal.</p>
-  <p><strong>Today's Date:</strong> <span id="date"></span></p>
-  <p><strong>Current Time:</strong> <span id="time"></span></p>
-  <p>Explore our portal to find jobs, events, trainings, artist opportunities, and useful services — all free of charge.</p>
-</section>
+  <section id="about">
+      <h2>About Slizeth Job Portal</h2>
+    <p>Slizeth is dedicated to empowering the people of KZN with reliable job connections, training programs, and opportunities to grow businesses. Partnered with <strong>Zathe Events</strong> to bring communities together.</p>
+  </section>
+  
 
-<section id="map">
-  <h2>Job & Event Map</h2>
-  <p>View job openings and events across KZN. You can see exactly where opportunities are located.</p>
-  <div id="mapid"></div>
-</section>
+  <footer>
+    <p>&copy; 2025 Slizeth Job Portal | Powered by SliZeth Pty(Ltd)</p>
+  </footer>
 
-<section id="opportunities">
-  <h2>Opportunities</h2>
-  <p>Available roles for 35+, government and private vacancies, internships, learnerships, and apprenticeships.</p>
-  <ul>
-    <li>Permanent employment</li>
-    <li>Contract work</li>
-    <li>Internships & Learnerships</li>
-    <li>Job Training Programs</li>
-  </ul>
-</section>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById(tabId).classList.add("active");
+    }
+    function updateDateTime() {
+      const now = new Date();
+      document.getElementById("date").innerText = now.toLocaleDateString();
+      document.getElementById("time").innerText = now.toLocaleTimeString();
+    }
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
 
-<section id="training">
-  <h2>Training & Skills Development</h2>
-  <p>Upskill yourself for free! Access in-service training, apprenticeships, and mentorship programs in various sectors.</p>
-</section>
+    // OpenStreetMap with Leaflet
+    var map = L.map('mapid').setView([-29.8587, 31.0218], 12); // Durban coords
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
 
-<section id="business">
-  <h2>Small Business & Startups</h2>
-  <p>Discover reliable business opportunities and resources for startups in KZN. Connect, network, and grow your small enterprise.</p>
-</section>
-
-<section id="members">
-  <h2>Zathe Members Registration</h2>
-  <p>Artists can register to participate in upcoming shows. Fill in your details and wait for approval.</p>
-  <form id="member-form">
-    <input type="text" name="name" placeholder="Full Name" required>
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="text" name="talent" placeholder="Talent / Instrument / Role" required>
-    <button type="submit">Submit Registration</button>
-  </form>
-</section>
-
-<section id="events">
-  <h2>Upcoming Durban & KZN Events</h2>
-  <p>Check out concerts, workshops, and community gatherings sponsored by our partners.</p>
-  <ul>
-    <li>Event 1: Durban Music Festival - 25 Sep 2025</li>
-    <li>Event 2: KZN Art Workshop - 5 Oct 2025</li>
-    <li>Event 3: Community Job Fair - 12 Oct 2025</li>
-  </ul>
-</section>
-
-<section id="weather">
-  <h2>Weather</h2>
-  <p>Current weather conditions in Durban (example only, no API required).</p>
-  <p><strong>Temperature:</strong> 26°C | <strong>Condition:</strong> Sunny</p>
-</section>
-
-<section id="services">
-  <h2>Free Services</h2>
-  <ul>
-    <li>Resume & CV templates</li>
-    <li>Interview tips & guides</li>
-    <li>Career advice & mentorship</li>
-  </ul>
-  <p>All services are free and accessible directly within this portal.</p>
-</section>
-
-<section id="jobmakers">
-// Example markers for Jobs / Events
-var jobs = [
-  {title:"Retail Cashier", company:"ShopRight Durban", lat:-29.8587, lng:31.0218},
-  {title:"Apprentice Electrician", company:"Durban Electrics", lat:-29.8600, lng:31.0250},
-  {title:"Intern - Graphic Design", company:"Creative KZN", lat:-29.8550, lng:31.0300},
-  {title:"Community Health Worker", company:"KZN Health Dept", lat:-29.8595, lng:31.0185},
-  {title:"Junior Accountant", company:"Finance Solutions KZN", lat:-29.8570, lng:31.0240}
-];
-
-jobs.forEach(job => {
-  L.marker([job.lat, job.lng]).addTo(map)
-    .bindPopup(`<b>${job.title}</b><br>${job.company}`);
-});
-
-// Job list in Opportunities tab
-var jobList = document.createElement('ul');
-jobs.forEach(job => {
-  var li = document.createElement('li');
-  li.innerHTML = `<strong>${job.title}</strong> at ${job.company}`;
-  document.getElementById('opportunities').appendChild(li);
-});
-
-// Add new 5 free services
-var servicesList = document.getElementById('services');
-var newServices = [
-  "Job interview simulations",
-  "CV/Resume review & feedback",
-  "Sector-specific career webinars",
-  "Small business mentorship for startups",
-  "Legal & labour rights guidance"
-];
-var ul = document.createElement('ul');
-newServices.forEach(service => {
-  var li = document.createElement('li');
-  li.textContent = service;
-  ul.appendChild(li);
-});
-servicesList.appendChild(ul);
-</section>
-
-<section id="about">
-  <h2>About Slizeth Job Portal</h2>
-  <p>Slizeth Pty (Ltd) empowers KZN communities with legal, trusted, and reliable job connections, training programs, and business opportunities.</p>
-  <p>Our partner, <strong>Zathe Events</strong>, helps organize events and showcase artists in the region.</p>
-  <p>Follow us on: 
-    <a href="https://facebook.com/slizeth" target="_blank">Facebook</a> | 
-    <a href="https://instagram.com/slizeth" target="_blank">Instagram</a> | 
-    <a href="https://twitter.com/slizeth" target="_blank">Twitter</a>
-  </p>
-</section>
-
-<footer>
-  <p>&copy; 2025 Slizeth Pty (Ltd) | Powered by Slizeth Pty (Ltd) | Partner: Zathe Events</p>
-</footer>
-
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script>
-  // Tabs
-  function showTab(tabId){
-    document.querySelectorAll("section").forEach(sec=>sec.classList.remove("active"));
-    document.getElementById(tabId).classList.add("active");
-  }
-
-  // Date & Time
-  function updateDateTime(){
-    const now = new Date();
-    document.getElementById("date").innerText = now.toLocaleDateString();
-    document.getElementById("time").innerText = now.toLocaleTimeString();
-  }
-  setInterval(updateDateTime,1000); updateDateTime();
-
-  // Map
-  var map = L.map('mapid').setView([-29.8587,31.0218],12); // Durban
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    maxZoom:19,
-    attribution:'&copy; OpenStreetMap contributors'
-  }).addTo(map);
-
-  // Example markers for Jobs / Events
-  var jobs = [
-    {lat:-29.8587, lng:31.021
+    // Example marker
+    L.marker([-29.8587, 31.0218]).addTo(map)
+      .bindPopup("Durban Job Example").openPopup();
+  </script>
+</body>
+</html>
