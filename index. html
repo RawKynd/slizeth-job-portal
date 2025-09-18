@@ -1,10 +1,172 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SLiZETh Job Portal</title>
+  <style>
+    /* Reset & base */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:Arial, sans-serif; background:#f5f5f5; color:#333; line-height:1.6; }
+
+    /* Header */
+    header { background:#0d47a1; color:white; padding:15px; text-align:center; }
+    header h1 { font-size:1.6rem; }
+    nav { margin-top:10px; display:flex; flex-wrap:wrap; justify-content:center; }
+    nav a { color:white; padding:8px 15px; text-decoration:none; font-weight:bold; border-radius:5px; transition:0.3s; }
+    nav a:hover { background:rgba(255,255,255,0.2); }
+
+    /* Tabs */
+    .tab { display:none; padding:20px; animation: fadeIn 0.4s; }
+    .active { display:block; }
+    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+
+    /* Lists & forms */
+    ul { padding-left:20px; margin-top:10px; }
+    li { margin-bottom:6px; }
+    button { background:#0d47a1; color:white; border:none; padding:10px 15px; border-radius:5px; cursor:pointer; }
+    button:hover { background:#1565c0; }
+    input, textarea { padding:10px; margin:8px 0; width:100%; max-width:400px; border:1px solid #ccc; border-radius:5px; }
+
+    /* Footer */
+    footer { background:#0d47a1; color:white; text-align:center; padding:12px; margin-top:20px; }
+
+    /* Responsive */
+    @media(max-width:600px){
+      nav { flex-direction:column; }
+      nav a { margin:3px 0; }
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome to SLiZETh Job Portal</h1>
-  <p>Contact: 0670578007 | rawvisual02@gmail.com</p>
+
+<header>
+  <h1>SLiZETh Job Portal</h1>
+  <nav>
+    <a href="#" onclick="showTab('home')">Home</a>
+    <a href="#" onclick="showTab('jobs')">Jobs</a>
+    <a href="#" onclick="showTab('services')">Services</a>
+    <a href="#" onclick="showTab('events')">Events</a>
+    <a href="#" onclick="showTab('members')">Members</a>
+    <a href="#" onclick="showTab('about')">About</a>
+    <a href="#" onclick="showTab('contact')">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <!-- Home -->
+  <section id="home" class="tab active">
+    <h2>Welcome to SLiZETh Job Portal</h2>
+    <p>Your trusted, legal, and reliable job portal in Durban and KZN. Find jobs, internships, learnerships, apprenticeships, training opportunities, and small business collaborations all in one place.</p>
+  </section>
+
+  <!-- Jobs -->
+  <section id="jobs" class="tab">
+    <h2>Latest Jobs</h2>
+    <ul id="job-list"></ul>
+    <h3>Job Locations Map</h3>
+    <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=31.0%2C-30.0%2C32.0%2C-29.5&layer=mapnik" width="100%" height="250" style="border:1px solid #ccc;"></iframe>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="tab">
+    <h2>Free Helpful Services</h2>
+    <ul>
+      <li>Job interview simulations</li>
+      <li>CV/Resume review & feedback</li>
+      <li>Sector-specific career webinars</li>
+      <li>Small business mentorship</li>
+      <li>Legal & labour rights guidance</li>
+    </ul>
+    <h3>Weather Info</h3>
+    <iframe src="https://forecast7.com/en/29d8587d31d0218/durban/" width="100%" height="250" style="border:1px solid #ccc;"></iframe>
+  </section>
+
+  <!-- Events -->
+  <section id="events" class="tab">
+    <h2>Upcoming Events</h2>
+    <ul>
+      <li>Zathe Music Festival - 25 Sep 2025</li>
+      <li>KZN Startup Expo - 10 Oct 2025</li>
+      <li>Community Health Workshop - 15 Oct 2025</li>
+    </ul>
+  </section>
+
+  <!-- Members -->
+  <section id="members" class="tab">
+    <h2>Register as Member</h2>
+    <form id="members-form">
+      <input type="text" name="name" placeholder="Full Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="text" name="talent" placeholder="Your Talent / Role" required>
+      <button type="submit">Submit</button>
+    </form>
+    <p>After submission, wait for approval to participate in shows.</p>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="tab">
+    <h2>About SLiZETh</h2>
+    <p>SLiZETh Pty (Ltd) | Durban, South Africa</p>
+    <p>Email: rawvisual02@gmail.com | Tel: 0670578007</p>
+    <p>Partners: Zathe Events</p>
+    <ul>
+      <li><a href="https://facebook.com">Facebook</a></li>
+      <li><a href="https://instagram.com">Instagram</a></li>
+      <li><a href="https://twitter.com">Twitter</a></li>
+    </ul>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="tab">
+    <h2>Contact Us</h2>
+    <form id="contact-form">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2025 SLiZETh Pty Ltd | Created by RAW1 @ RAW Studios</p>
+</footer>
+
+<script>
+  // Tab switching
+  function showTab(tabId){
+    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+  }
+
+  // Job list
+  const jobs = [
+    {title:"Retail Cashier", company:"ShopRight Durban"},
+    {title:"Apprentice Electrician", company:"Durban Electrics"},
+    {title:"Intern - Graphic Design", company:"Creative KZN"},
+    {title:"Community Health Worker", company:"KZN Health Dept"},
+    {title:"Junior Accountant", company:"Finance Solutions KZN"}
+  ];
+  const jobList = document.getElementById('job-list');
+  jobs.forEach(job => {
+    const li = document.createElement('li');
+    li.innerHTML = `<strong>${job.title}</strong> at ${job.company}`;
+    jobList.appendChild(li);
+  });
+
+  // Forms (alert only)
+  document.getElementById('members-form').addEventListener('submit', e => {
+    e.preventDefault();
+    alert("Membership submitted!");
+    e.target.reset();
+  });
+  document.getElementById('contact-form').addEventListener('submit', e => {
+    e.preventDefault();
+    alert("Message sent!");
+    e.target.reset();
+  });
+</script>
+
 </body>
 </html>
